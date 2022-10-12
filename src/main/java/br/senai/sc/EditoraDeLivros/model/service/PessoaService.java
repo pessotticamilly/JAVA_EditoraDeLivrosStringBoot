@@ -39,4 +39,12 @@ public class PessoaService {
     public Optional<Pessoa> findByEmail(String email) {
         return pessoaRopository.findByEmail(email);
     }
+
+    public boolean existByEmail(String email) {
+        return pessoaRopository.existByEmail(email);
+    }
+
+    public boolean existById(Long cpf) {
+        return pessoaRopository.existById(cpf);
+    }
 }

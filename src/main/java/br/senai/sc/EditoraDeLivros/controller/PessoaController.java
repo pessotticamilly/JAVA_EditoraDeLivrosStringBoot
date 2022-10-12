@@ -29,14 +29,11 @@ public class PessoaController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid PessoaDto pessoaDto) {
-        Optional<Pessoa> pessoaOptional = pessoaService.findById(pessoaDto.getCpf());
-
-        if (pessoaOptional.isPresent()) {
+        if (pessoaService.existById(pessoaDto.getCpf())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já cadastrado");
         }
 
-        pessoaOptional = pessoaService.findById(pessoaDto.getCpf());
-        if (pessoaOptional.isPresent()) {
+        if (pessoaService.existByEmail(pessoaDto.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já cadastrado");
         }
 
@@ -48,20 +45,16 @@ public class PessoaController {
 
     @GetMapping("/{cpf}")
     public ResponseEntity<Object> findById(@PathVariable(value = "cpf") Long cpf) {
-        Optional<Pessoa> pessoaOptional = pessoaService.findById(cpf);
-
-        if (pessoaOptional.isEmpty()) {
+        if (pessoaService.existById(cpf)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o CPF informado");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findById(cpf));
     }
 
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "cpf") Long cpf) {
-        Optional<Pessoa> pessoaOptional = pessoaService.findById(cpf);
-
-        if(pessoaOptional.isEmpty()) {
+        if (pessoaService.existById(cpf)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o CPF informado");
         }
 
@@ -71,12 +64,10 @@ public class PessoaController {
 
     @GetMapping("/{email}")
     public ResponseEntity<Object> findByEmail(@PathVariable(value = "email") String email) {
-        Optional<Pessoa> pessoaOptional = pessoaService.findByEmail(email);
-
-        if (pessoaOptional.isEmpty()) {
+        if (pessoaService.existByEmail(email)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o email informado");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findByEmail(email));
     }
 }
