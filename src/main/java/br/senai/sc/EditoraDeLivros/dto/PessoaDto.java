@@ -17,4 +17,28 @@ public class PessoaDto {
     private String senha;
     @NotBlank
     private Genero genero;
+
+    public Long getCpf() {
+        return cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
 }

@@ -6,11 +6,13 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@Service
 public class PessoaService {
     private PessoaRepository pessoaRopository;
 
@@ -34,23 +36,7 @@ public class PessoaService {
         pessoaRopository.deleteById(aLong);
     }
 
-    public <S extends Pessoa> Optional<S> findOne(Example<S> example) {
-        return pessoaRopository.findOne(example);
-    }
-
-    public <S extends Pessoa> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return pessoaRopository.findAll(example, pageable);
-    }
-
-    public <S extends Pessoa> long count(Example<S> example) {
-        return pessoaRopository.count(example);
-    }
-
-    public <S extends Pessoa> boolean exists(Example<S> example) {
-        return pessoaRopository.exists(example);
-    }
-
-    public <S extends Pessoa, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return pessoaRopository.findBy(example, queryFunction);
+    public Optional<Pessoa> findByEmail(String email) {
+        return pessoaRopository.findByEmail(email);
     }
 }

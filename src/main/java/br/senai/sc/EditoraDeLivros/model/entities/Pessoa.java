@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "pessoa")
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Getter @Setter
 @ToString
 @EqualsAndHashCode
