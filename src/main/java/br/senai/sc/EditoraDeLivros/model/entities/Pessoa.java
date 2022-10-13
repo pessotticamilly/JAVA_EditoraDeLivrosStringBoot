@@ -15,15 +15,20 @@ public class Pessoa {
     @Id
     @Column(length = 11, nullable = false, unique = true)
     private Long cpf;
+
     @Column(length = 50, nullable = false)
     private String nome;
+
     @Column(length = 50, nullable = false)
     private String sobrenome;
+
     @Column(length = 100, nullable = false, unique = true)
     private String email;
+
     @Column(length = 18, nullable = false)
     private String senha;
+
     @Enumerated(value = EnumType.STRING)
-    @Column(length = 9, nullable = false)
+    @Column(length = 10, nullable = false)
     private Genero genero;
 }

@@ -5,17 +5,17 @@ import br.senai.sc.EditoraDeLivros.model.entities.Genero;
 import javax.validation.constraints.NotBlank;
 
 public class PessoaDto {
-    @NotBlank
+//    @NotBlank
     private Long cpf;
-    @NotBlank
+//    @NotBlank
     private String nome;
-    @NotBlank
+//    @NotBlank
     private String sobrenome;
-    @NotBlank
+//    @NotBlank
     private String email;
-    @NotBlank
+//    @NotBlank
     private String senha;
-    @NotBlank
+//    @NotBlank
     private Genero genero;
 
     public Long getCpf() {
