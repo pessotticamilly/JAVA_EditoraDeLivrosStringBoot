@@ -9,37 +9,37 @@ import java.util.Optional;
 
 @Service
 public class PessoaService {
-    private PessoaRepository pessoaRopository;
+    private final PessoaRepository pessoaRepository;
 
-    public PessoaService(PessoaRepository pessoaDao) {
-        this.pessoaRopository = pessoaDao;
+    public PessoaService(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
     }
 
     public List<Pessoa> findAll() {
-        return pessoaRopository.findAll();
+        return pessoaRepository.findAll();
     }
 
     public <S extends Pessoa> S save(S entity) {
-        return pessoaRopository.save(entity);
+        return pessoaRepository.save(entity);
     }
 
     public Optional<Pessoa> findById(Long aLong) {
-        return pessoaRopository.findById(aLong);
+        return pessoaRepository.findById(aLong);
     }
 
     public void deleteById(Long aLong) {
-        pessoaRopository.deleteById(aLong);
+        pessoaRepository.deleteById(aLong);
     }
 
     public Optional<Pessoa> findByEmail(String email) {
-        return pessoaRopository.findByEmail(email);
+        return pessoaRepository.findByEmail(email);
     }
 
     public boolean existByEmail(String email) {
-        return pessoaRopository.existsByEmail(email);
+        return pessoaRepository.existsByEmail(email);
     }
 
     public boolean existById(Long cpf) {
-        return pessoaRopository.existsById(cpf);
+        return pessoaRepository.existsById(cpf);
     }
 }

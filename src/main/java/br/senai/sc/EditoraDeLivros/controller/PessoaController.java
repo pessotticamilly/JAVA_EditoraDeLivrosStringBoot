@@ -45,22 +45,8 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findByEmail(email));
     }
 
-    @PutMapping("/editar/{cpf}")
-    public ResponseEntity<Object> update(@PathVariable(value = "cpf") Long cpf, @Valid @RequestBody PessoaDto pessoaDto) {
-        if (!pessoaService.existById(cpf)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o CPF informado");
-        }
-
-        Pessoa pessoa = new Pessoa();
-        BeanUtils.copyProperties(pessoaDto, pessoa);
-        pessoa.setCpf(cpf);
-
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
-    }
-
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> save(@RequestBody @Valid PessoaDto pessoaDto) {
-        System.out.println("foi");
         if (pessoaService.existById(pessoaDto.getCpf())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já cadastrado");
         }
@@ -75,7 +61,20 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
     }
 
-    @DeleteMapping("/deletar/{cpf}")
+    @PutMapping("/editar/{cpf}")
+    public ResponseEntity<Object> update(@PathVariable(value = "cpf") Long cpf, @Valid @RequestBody PessoaDto pessoaDto) {
+        if (!pessoaService.existById(cpf)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o CPF informado");
+        }
+
+        Pessoa pessoa = new Pessoa();
+        BeanUtils.copyProperties(pessoaDto, pessoa);
+        pessoa.setCpf(cpf);
+
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
+    }
+
+    @DeleteMapping("/excluir/{cpf}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "cpf") Long cpf) {
         if (!pessoaService.existById(cpf)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com o CPF informado");
