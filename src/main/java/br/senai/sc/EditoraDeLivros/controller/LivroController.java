@@ -60,6 +60,7 @@ public class LivroController {
 
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDto, livro);
+        livro.setStatus(Status.AGUARDANDO_REVISAO);
 
         return ResponseEntity.status(HttpStatus.OK).body(livroService.save(livro));
     }
