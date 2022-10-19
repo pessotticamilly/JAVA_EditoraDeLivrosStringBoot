@@ -1,5 +1,6 @@
 package br.senai.sc.EditoraDeLivros.model.service;
 
+import br.senai.sc.EditoraDeLivros.model.entities.Autor;
 import br.senai.sc.EditoraDeLivros.model.entities.Livro;
 import br.senai.sc.EditoraDeLivros.model.entities.Status;
 import br.senai.sc.EditoraDeLivros.repository.LivroRepository;
@@ -23,6 +24,10 @@ public class LivroService {
 
     public List<Livro> findByStatus(Status status) {
         return livroRepository.findByStatus(status);
+    }
+
+    public List<Livro> findByAutor(Autor autor) {
+        return livroRepository.findByAutores(autor);
     }
 
     public List<Livro> findAll(){

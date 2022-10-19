@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 @Table(name = "tb_pessoa")
 @AllArgsConstructor

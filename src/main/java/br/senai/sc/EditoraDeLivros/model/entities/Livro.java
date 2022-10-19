@@ -3,6 +3,7 @@ package br.senai.sc.EditoraDeLivros.model.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_livro")
@@ -33,9 +34,11 @@ public class Livro {
     @ManyToOne
     private Revisor revisor;
 
-    @JoinColumn(name = "cpf_autor", nullable = false)
-    @ManyToOne
-    private Autor autor;
+    @ManyToMany
+    @JoinTable(name = "tb_livro_autor",
+            joinColumns = @JoinColumn(name = "isbn_livro", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "cpf_autor", nullable = false))
+    private List<Autor> autores;
 
     @JoinColumn(name = "cnpj_editora")
     @ManyToOne
