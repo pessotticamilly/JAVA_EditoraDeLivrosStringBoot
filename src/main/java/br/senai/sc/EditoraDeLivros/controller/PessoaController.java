@@ -56,7 +56,7 @@ public class PessoaController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já cadastrado");
         }
 
-        Pessoa pessoa = PessoaFactory.getPessoa(dtype); 
+        Pessoa pessoa = PessoaFactory.getPessoa(dtype);
         BeanUtils.copyProperties(pessoaDto, pessoa);
 
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
