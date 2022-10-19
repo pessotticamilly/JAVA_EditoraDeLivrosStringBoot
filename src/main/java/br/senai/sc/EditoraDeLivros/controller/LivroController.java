@@ -18,7 +18,7 @@ import java.util.Optional;
 
 
 @Controller
-@RequestMapping("/editoradelivros/tb_livro")
+@RequestMapping("/editoradelivro/tb_livro")
 public class LivroController {
     private final LivroService livroService;
 
@@ -55,7 +55,7 @@ public class LivroController {
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> save(@RequestBody @Valid LivroDto livroDto) {
         if (livroService.existById(livroDto.getIsbn())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já cadastrado");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ISBN já cadastrado");
         }
 
         Livro livro = new Livro();
@@ -70,9 +70,8 @@ public class LivroController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum livro com o ISBN informado");
         }
 
-        Livro livro = new Livro();
+        Livro livro = livroService.findById(livroDto.getIsbn()).get();
         BeanUtils.copyProperties(livroDto, livro);
-        livro.setIsbn(isbn);
 
         return ResponseEntity.status(HttpStatus.OK).body(livroService.save(livro));
     }
