@@ -22,10 +22,10 @@ public class Livro {
     @Column(nullable = false)
     private Integer qntdPaginas;
 
-    @Column( nullable = false)
+    @Column
     private Double paginasRevisadas;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
@@ -33,7 +33,7 @@ public class Livro {
     @ManyToOne
     private Revisor revisor;
 
-    @JoinColumn(name = "cpf_autor")
+    @JoinColumn(name = "cpf_autor", nullable = false)
     @ManyToOne
     private Autor autor;
 
