@@ -26,7 +26,7 @@ public class LivroController {
         this.livroService = pessoaService;
     }
 
-    @GetMapping("/listar/{isbn}")
+    @GetMapping("/listar/isbn/{isbn}")
     public ResponseEntity<Object> findById(@PathVariable(value = "isbn") Long isbn) {
         Optional<Livro> livroOptional = livroService.findById(isbn);
         if (livroOptional.isEmpty()) {
@@ -36,7 +36,7 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.OK).body(livroOptional);
     }
 
-    @GetMapping("/listar/{status}")
+    @GetMapping("/listar/status/{status}")
     public ResponseEntity<Object> findByStatus(@PathVariable(value = "status") Status status) {
         List<Livro> livroOptional = livroService.findByStatus(status);
 

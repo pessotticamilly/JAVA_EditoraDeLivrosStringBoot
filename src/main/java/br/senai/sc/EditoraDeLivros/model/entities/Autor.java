@@ -11,8 +11,7 @@ import javax.persistence.Table;
 @Table(name = "tb_autor")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 public class Autor extends Pessoa {
     @Id
