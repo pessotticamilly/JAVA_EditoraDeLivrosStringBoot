@@ -6,11 +6,13 @@ import br.senai.sc.EditoraDeLivros.model.entities.Livro;
 import br.senai.sc.EditoraDeLivros.model.entities.Status;
 import br.senai.sc.EditoraDeLivros.model.service.LivroService;
 import br.senai.sc.EditoraDeLivros.model.service.PessoaService;
+import br.senai.sc.EditoraDeLivros.util.LivroUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -70,19 +72,21 @@ public class LivroController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> save(@RequestBody @Valid LivroDto livroDto) {
-        if (livroService.existById(livroDto.getIsbn())) {
+    public ResponseEntity<Object> save(@RequestParam("livro") String livroJson, @RequestParam("arquivo") MultipartFile file) {
+        LivroUtil util = new LivroUtil();
+        Livro livro = util.convertJsonToModel(livroJson);
+
+        if (livroService.existById(livro.getIsbn())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("ISBN já cadastrado");
         }
 
-        for(int i = 0; i < livroDto.getAutores().size(); i++) {
-            if(!pessoaService.existById(livroDto.getAutores().get(i).getCpf())){
+        for(int i = 0; i < livro.getAutores().size(); i++) {
+            if(!pessoaService.existById(livro.getAutores().get(i).getCpf())){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Autor não encontrado!");
             }
         }
 
-        Livro livro = new Livro();
-        BeanUtils.copyProperties(livroDto, livro);
+        livro.setArquivo(file);
         livro.setStatus(Status.AGUARDANDO_REVISAO);
 
         return ResponseEntity.status(HttpStatus.OK).body(livroService.save(livro));
