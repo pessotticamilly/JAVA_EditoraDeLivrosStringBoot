@@ -8,6 +8,10 @@ import br.senai.sc.EditoraDeLivros.model.service.LivroService;
 import br.senai.sc.EditoraDeLivros.model.service.PessoaService;
 import br.senai.sc.EditoraDeLivros.util.LivroUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -69,6 +73,11 @@ public class LivroController {
     @GetMapping("/listar")
     public ResponseEntity<List<Livro>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(livroService.findAll());
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Livro>> findAllPage(@PageableDefault(page = 0, size = 9, sort = "isbn", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(livroService.findAll(pageable));
     }
 
     @PostMapping("/cadastrar")
