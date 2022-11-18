@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +32,8 @@ public class AutenticacaoConfig extends WebSecurityConfigurerAdapter {
                 // Determina que todas as demais requisições precisam de autenticação
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and().addFilterBefore(new AutenticacaoFiltro(autenticacaoService), UsernamePasswordAuthenticationFilter.class);
     }
 
     // Configura a autenticação para os acessos
