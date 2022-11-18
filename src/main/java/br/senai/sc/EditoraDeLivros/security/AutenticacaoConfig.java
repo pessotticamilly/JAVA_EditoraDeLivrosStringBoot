@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,7 +27,7 @@ public class AutenticacaoConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 //Libera o acesso sem autenticação para o login
-                .antMatchers("/login", "/editoradelivros/tb_pessoa/cadastrar/0").permitAll()
+                .antMatchers("/login", "/editoradelivros/tb_pessoa/cadastrar/*").permitAll()
                 // Determina que todas as demais requisições precisam de autenticação
                 .anyRequest().authenticated()
                 .and().csrf().disable()
@@ -37,5 +38,12 @@ public class AutenticacaoConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    // Utilizado para realizar a autenticação em AutenticacaoController
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 }
