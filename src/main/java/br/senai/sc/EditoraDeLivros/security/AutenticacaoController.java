@@ -17,18 +17,23 @@ import javax.validation.Valid;
 @RequestMapping("/login")
 public class AutenticacaoController {
     @Autowired
+    private AutenticacaoService autenticacaoService;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @PostMapping
     public ResponseEntity<Object> autenticacao(@RequestBody @Valid UsuarioDto usuarioDto) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuarioDto.getEmail(), usuarioDto.getSenha());
 
-        System.out.println("Antes - " + authenticationToken);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        System.out.println("Depois - " + authentication.isAuthenticated());
+        System.out.println("Autenticado - " + authentication.isAuthenticated());
+
+        String token = autenticacaoService.gerarToken(authentication);
+        System.out.println("Token - " + token);
 
         if (authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.OK).body("Usuário autenticado com sucesso");
+            return ResponseEntity.status(HttpStatus.OK).body(new TokenDto("Bearer", token));
         }
 
         return ResponseEntity.badRequest().build();
